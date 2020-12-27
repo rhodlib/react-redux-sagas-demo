@@ -1,14 +1,11 @@
 import React from "react";
 import {Row, Col, Button, Card} from 'antd';
-import {useSelector, useDispatch} from 'react-redux';
 import {PlusOutlined, MinusOutlined} from "@ant-design/icons";
-import {actionTypes} from '../redux'; 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {actionCreators as counterActions, selector as counterSelector} from '../features/counter'; 
 
-const Counter = () => {
-    const counter = useSelector( state => state.counter);
-    const dispatch = useDispatch();
-    const increment = () => dispatch({type: actionTypes.INCREMENT});
-    const decrement = () => dispatch({type: actionTypes.DECREMENT});
+const Counter = ({counter, counterActions}) => {
 
     return(
         <>
@@ -17,13 +14,13 @@ const Counter = () => {
             <Row>
                 <Col md={9}/>
                 <Col md={2}>
-                    <Button size="large" icon={<MinusOutlined/>} shape="circle" onClick={decrement}/>
+                    <Button size="large" icon={<MinusOutlined/>} shape="circle" onClick={counterActions.decrement}/>
                 </Col>
                 <Col md={2}>
-                    <span style={{fontSize: '2rem', fontWeight: 'bold'}}>{counter}</span>
+                    <span style={{fontSize: '2rem', fontWeight: 'bold'}}>{counter.value}</span>
                 </Col>
                 <Col md={2}>
-                    <Button size="large" icon={<PlusOutlined/>} shape="circle" onClick={increment}/>
+                    <Button size="large" icon={<PlusOutlined/>} shape="circle" onClick={counterActions.increment}/>
                 </Col>
                 <Col md={9}/>
             </Row>
@@ -32,4 +29,7 @@ const Counter = () => {
     )
 }
 
-export default Counter;
+const mapStateToProps = (state) => ({...counterSelector(state)});
+const mapDispatchToProps = (dispatch) => ({counterActions: bindActionCreators(counterActions, dispatch)})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
