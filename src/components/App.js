@@ -3,6 +3,7 @@ import { Layout, Menu } from "antd";
 import {
   PieChartOutlined
 } from "@ant-design/icons";
+import Users from './Users';
 import Counter from './Counter';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -18,6 +19,9 @@ const App = () => {
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1" icon={<PieChartOutlined />}>
+            Users
+          </Menu.Item>
+          <Menu.Item key="2" icon={<PieChartOutlined />}>
             Counter
           </Menu.Item>
         </Menu>
@@ -29,7 +33,7 @@ const App = () => {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            <Counter/>
+            <Users/>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
